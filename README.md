@@ -1,6 +1,6 @@
 # Unifi Protect api
 
-Polyglot V3 NodeServer for **EISY** or **Polisy** that integrates **UniFi Protect** cameras and **USL/UP Sense** sensors via Ubiquiti's Public Integration API (API-key auth). It reports motion, person, vehicle, animal, package, line crossing, audio, doorbell, and sensor events (contact, leak, glass break, temperature, humidity, and more) as ISY nodes. Detection changes emit ISY **control commands** (e.g. `MOTION`, `PERSON`, `OPEN`) for program triggers, not only status driver updates. **Read-only** — subscribes to Protect; does not send commands back to UniFi.
+Plugin for **EISY/Polisy** (eisy-ui or PG3 environment) that integrates **UniFi Protect** cameras and **USL/UP Sense** sensors via Ubiquiti's Public Integration API (API-key auth). It reports motion, person, vehicle, animal, package, line crossing, audio, doorbell, and sensor events (contact, leak, glass break, temperature, humidity, and more) as ISY nodes. Detection changes emit ISY **control commands** (e.g. `MOTION`, `PERSON`, `OPEN`) for program triggers, not only status driver updates. **Read-only** — subscribes to Protect; does not send commands back to UniFi.
 
 **UD store listing:** `UnifiProtapi` (15-character name limit on the store; same plugin as this repo).
 
@@ -29,18 +29,19 @@ This plugin is built exclusively on Ubiquiti's **Public Integration API** (API-k
 
 ## Requirements
 
+- **EISY/Polisy** (eisy-ui or PG3 environment)
 - UniFi Protect controller (UDM Pro, UDM SE, UCK Gen2+, etc.)
 - UniFi OS 2.0+ with Protect **5.3+**
 - Integration API key from **Control Plane → Integrations**
 
 ## Installation
 
-Add the NodeServer in PG3x:
+Install from the Plugin Store in eisy-ui or PG3, or from Git:
 
 - **GitHub URL:** `https://github.com/sejgit-udi-plugins/udi-unifiprotectapi-pg3x`
 - **Executable:** `udi-unifiprotectapi-pg3x.py`
 
-After upgrading to v1.5+, reinstall the NodeServer profile on EISY so new capability-based nodedefs are loaded, then run **Re-Discover**.
+After upgrading to v1.5+, update the plugin profile on EISY/Polisy so new capability-based nodedefs are loaded, then run **Re-Discover**.
 
 See [POLYGLOT_CONFIG.md](POLYGLOT_CONFIG.md) for configuration details.
 
