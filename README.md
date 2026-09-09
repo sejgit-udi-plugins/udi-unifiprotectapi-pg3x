@@ -1,6 +1,6 @@
 # Unifi Protect api
 
-NodeServer for Universal Devices **EISY** or **Polisy** (Polyglot V3). UniFi Protect api integration of cameras and USL/UP Sense sensors — detection events for ISY programs.
+Polyglot V3 NodeServer for **EISY** or **Polisy** that integrates **UniFi Protect** cameras and **USL/UP Sense** sensors via Ubiquiti's Public Integration API (API-key auth). It reports motion, person, vehicle, animal, package, line crossing, audio, doorbell, and sensor events (contact, leak, glass break, temperature, humidity, and more) as ISY nodes. Detection changes emit ISY **control commands** (e.g. `MOTION`, `PERSON`, `OPEN`) for program triggers, not only status driver updates. **Read-only** — subscribes to Protect; does not send commands back to UniFi.
 
 **UD store listing:** `UnifiProtapi` (15-character name limit on the store; same plugin as this repo).
 
