@@ -2,7 +2,7 @@
 
 All notable changes to this project are documented here.
 
-## Unreleased
+## 1.5.5
 
 - Temporary Polyglot **success** notice after connect and discovery (clears after 30 s), matching TaHoma — includes camera and sensor counts; **hello** notice while retrying connection; **Discover** / resync shows updated success notice
 
