@@ -2,6 +2,10 @@
 
 All notable changes to this project are documented here.
 
+## Unreleased
+
+- Temporary Polyglot **success** notice after connect and discovery (clears after 30 s), matching TaHoma — includes camera and sensor counts; **hello** notice while retrying connection; **Discover** / resync shows updated success notice
+
 ## 1.5.4
 
 - Send control commands with explicit value and uom (``reportCmd(cmd, 1, 2)`` / ``(cmd, 0, 2)``) so Python udi_interface forwards them to ISY

@@ -3,6 +3,8 @@
 import asyncio
 import threading
 import time
+from threading import Timer
+from typing import Optional
 
 import aiohttp
 import udi_interface
@@ -15,6 +17,7 @@ from utils.camera_caps import camera_nodedef_for
 from utils.protect_client import ProtectClient, device_address
 from utils.sensor_caps import capability_config_changed, sensor_capabilities
 from utils.sensor_nodedef import sensor_nodedef_for_caps
+from utils.notices import connecting_notice_message, success_notice_message
 from utils.temperature import normalize_units
 
 LOGGER = udi_interface.LOGGER
@@ -22,6 +25,7 @@ LOGGER = udi_interface.LOGGER
 _WATCHDOG_DEFAULT_MIN = 5
 _RESTART_COOLDOWN_SEC = 1800
 _NOTICE_AFTER_SEC = 60
+_SUCCESS_NOTICE_SEC = 30
 
 
 class Controller(udi_interface.Node):
@@ -50,6 +54,8 @@ class Controller(udi_interface.Node):
         self._watchdog_minutes = _WATCHDOG_DEFAULT_MIN
         self._running = True
         self._connect_lock = threading.Lock()
+        self._notice_clear_timer: Optional[Timer] = None
+        self._host = ""
 
         polyglot.subscribe(polyglot.CONFIGDONE, self._on_config_done)
         polyglot.subscribe(polyglot.START, self.start, address)
@@ -76,6 +82,7 @@ class Controller(udi_interface.Node):
     def stop(self):
         LOGGER.info('Stopping UniFi Protect nodeserver')
         self._running = False
+        self._cancel_notice_clear_timer()
         if self._client:
             self._async.run(self._client.close(), timeout=10)
         self._async.shutdown()
@@ -208,6 +215,7 @@ class Controller(udi_interface.Node):
 
     async def _supervise(self, host, port, api_key, verify_ssl):
         backoff = 5
+        self._host = host
         while self._running:
             try:
                 LOGGER.info(f'Connecting to UniFi Protect at {host}:{port}')
@@ -223,6 +231,7 @@ class Controller(udi_interface.Node):
 
                 await asyncio.get_event_loop().run_in_executor(
                     None, self._discover_devices, cameras, sensors)
+                self._show_success_notice(host)
 
                 LOGGER.info('Listening on integration event/device WebSockets')
                 backoff = 5
@@ -241,6 +250,7 @@ class Controller(udi_interface.Node):
             if not self._running:
                 break
             LOGGER.info(f'Retrying in {backoff}s')
+            self._show_connecting_notice(host, backoff)
             await asyncio.sleep(backoff)
             backoff = min(backoff * 2, 60)
 
@@ -252,6 +262,44 @@ class Controller(udi_interface.Node):
                 await client.close()
             except Exception as e:
                 LOGGER.debug(f'Error closing client: {e}')
+
+    def _cancel_notice_clear_timer(self):
+        if self._notice_clear_timer:
+            self._notice_clear_timer.cancel()
+            self._notice_clear_timer = None
+
+    def _schedule_notice_clear(self, key: str, seconds: float):
+        self._cancel_notice_clear_timer()
+
+        def _clear():
+            try:
+                if key in self.poly.Notices:
+                    self.poly.Notices.delete(key)
+                    LOGGER.info(f'Cleared Polyglot notice {key!r}')
+            except Exception as e:
+                LOGGER.warning(f'Failed to clear notice {key!r}: {e}')
+            finally:
+                self._notice_clear_timer = None
+
+        self._notice_clear_timer = Timer(seconds, _clear)
+        self._notice_clear_timer.daemon = True
+        self._notice_clear_timer.start()
+
+    def _show_success_notice(self, host: str):
+        """Show a temporary success notice after connect and discovery."""
+        for key in ('hello', 'offline', 'config', 'error'):
+            self.poly.Notices.delete(key)
+        message = success_notice_message(
+            host, len(self._cameras), len(self._sensors))
+        self.poly.Notices['success'] = message
+        self._schedule_notice_clear('success', _SUCCESS_NOTICE_SEC)
+        LOGGER.info(message)
+
+    def _show_connecting_notice(self, host: str, retry_seconds: int):
+        """Show a temporary notice while waiting to retry connection."""
+        self.poly.Notices.delete('success')
+        self.poly.Notices['hello'] = connecting_notice_message(
+            host, retry_seconds)
 
     def _mark_online(self):
         self.setDriver('ST', 1)
@@ -492,6 +540,9 @@ class Controller(udi_interface.Node):
             else:
                 await asyncio.get_event_loop().run_in_executor(
                     None, self._ensure_sensor, sensor)
+        host = (self._host or (self._params.get('host') or '')).strip()
+        if host:
+            self._show_success_notice(host)
 
     def query(self, command=None):
         self.reportDrivers()
