@@ -12,7 +12,6 @@ SMART_TYPE_MAP: Dict[str, Tuple[str, CmdPair]] = {
     'person': ('GV2', ('PERSON', 'NOPERSON')),
     'vehicle': ('GV3', ('VEHICLE', 'NOVEHICLE')),
     'animal': ('GV4', ('ANIMAL', 'NOANIMAL')),
-    'package': ('GV5', ('PACKAGE', 'NOPACKAGE')),
     'face': ('GV6', ('FACE', 'NOFACE')),
     'licenseplate': ('GV7', ('LPR', 'NOLPR')),
     'line': ('GV8', ('LINE', 'NOLINE')),
@@ -61,7 +60,6 @@ CAMERA_DRIVERS = {
         {'driver': 'GV2', 'value': 0, 'uom': 2},
         {'driver': 'GV3', 'value': 0, 'uom': 2},
         {'driver': 'GV4', 'value': 0, 'uom': 2},
-        {'driver': 'GV5', 'value': 0, 'uom': 2},
     ],
     'unifi_camera_ai': [
         {'driver': 'ST', 'value': 0, 'uom': 2},
@@ -69,7 +67,6 @@ CAMERA_DRIVERS = {
         {'driver': 'GV2', 'value': 0, 'uom': 2},
         {'driver': 'GV3', 'value': 0, 'uom': 2},
         {'driver': 'GV4', 'value': 0, 'uom': 2},
-        {'driver': 'GV5', 'value': 0, 'uom': 2},
         {'driver': 'GV6', 'value': 0, 'uom': 2},
         {'driver': 'GV7', 'value': 0, 'uom': 2},
         {'driver': 'GV8', 'value': 0, 'uom': 2},
@@ -80,7 +77,6 @@ CAMERA_DRIVERS = {
         {'driver': 'GV2', 'value': 0, 'uom': 2},
         {'driver': 'GV3', 'value': 0, 'uom': 2},
         {'driver': 'GV4', 'value': 0, 'uom': 2},
-        {'driver': 'GV5', 'value': 0, 'uom': 2},
         {'driver': 'GV6', 'value': 0, 'uom': 2},
         {'driver': 'GV7', 'value': 0, 'uom': 2},
         {'driver': 'GV8', 'value': 0, 'uom': 2},
@@ -100,7 +96,6 @@ CAMERA_DRIVERS = {
         {'driver': 'GV2', 'value': 0, 'uom': 2},
         {'driver': 'GV3', 'value': 0, 'uom': 2},
         {'driver': 'GV4', 'value': 0, 'uom': 2},
-        {'driver': 'GV5', 'value': 0, 'uom': 2},
         {'driver': 'GV6', 'value': 0, 'uom': 2},
         {'driver': 'GV18', 'value': 0, 'uom': 2},
     ],
@@ -114,16 +109,16 @@ DETECTION_DRIVERS_BY_NODEDEF = {
 CAMERA_SENDS = {
     'unifi_camera_detect': (
         'MOTION', 'NOMOTION', 'PERSON', 'NOPERSON', 'VEHICLE', 'NOVEHICLE',
-        'ANIMAL', 'NOANIMAL', 'PACKAGE', 'NOPACKAGE',
+        'ANIMAL', 'NOANIMAL',
     ),
     'unifi_camera_ai': (
         'MOTION', 'NOMOTION', 'PERSON', 'NOPERSON', 'VEHICLE', 'NOVEHICLE',
-        'ANIMAL', 'NOANIMAL', 'PACKAGE', 'NOPACKAGE', 'FACE', 'NOFACE',
+        'ANIMAL', 'NOANIMAL', 'FACE', 'NOFACE',
         'LPR', 'NOLPR', 'LINE', 'NOLINE',
     ),
     'unifi_camera_ai_audio': (
         'MOTION', 'NOMOTION', 'PERSON', 'NOPERSON', 'VEHICLE', 'NOVEHICLE',
-        'ANIMAL', 'NOANIMAL', 'PACKAGE', 'NOPACKAGE', 'FACE', 'NOFACE',
+        'ANIMAL', 'NOANIMAL', 'FACE', 'NOFACE',
         'LPR', 'NOLPR', 'LINE', 'NOLINE', 'SMOKE', 'NOSMOKE', 'CO', 'NOCO',
         'SIREN', 'NOSIREN', 'BABYCRY', 'NOBABYCRY', 'HORN', 'NOHORN',
         'GLASS', 'NOGLASS', 'SPEAK', 'NOSPEAK', 'BARK', 'NOBARK',
@@ -131,6 +126,6 @@ CAMERA_SENDS = {
     ),
     'unifi_camera_doorbell': (
         'MOTION', 'NOMOTION', 'PERSON', 'NOPERSON', 'VEHICLE', 'NOVEHICLE',
-        'ANIMAL', 'NOANIMAL', 'PACKAGE', 'NOPACKAGE', 'FACE', 'NOFACE', 'RING', 'NORING',
+        'ANIMAL', 'NOANIMAL', 'FACE', 'NOFACE', 'RING', 'NORING',
     ),
 }

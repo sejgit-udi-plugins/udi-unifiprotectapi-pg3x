@@ -21,7 +21,6 @@
       <st id="GV2" editor="E_STATUS"/>
       <st id="GV3" editor="E_STATUS"/>
       <st id="GV4" editor="E_STATUS"/>
-      <st id="GV5" editor="E_STATUS"/>
     </sts>
     <cmds>
       <sends>
@@ -30,7 +29,6 @@
         <cmd id="PERSON"/><cmd id="NOPERSON"/>
         <cmd id="VEHICLE"/><cmd id="NOVEHICLE"/>
         <cmd id="ANIMAL"/><cmd id="NOANIMAL"/>
-        <cmd id="PACKAGE"/><cmd id="NOPACKAGE"/>
       </sends>
       <accepts><cmd id="QUERY"/></accepts>
     </cmds>
@@ -43,7 +41,6 @@
       <st id="GV2" editor="E_STATUS"/>
       <st id="GV3" editor="E_STATUS"/>
       <st id="GV4" editor="E_STATUS"/>
-      <st id="GV5" editor="E_STATUS"/>
       <st id="GV6" editor="E_STATUS"/>
       <st id="GV7" editor="E_STATUS"/>
       <st id="GV8" editor="E_STATUS"/>
@@ -55,7 +52,6 @@
         <cmd id="PERSON"/><cmd id="NOPERSON"/>
         <cmd id="VEHICLE"/><cmd id="NOVEHICLE"/>
         <cmd id="ANIMAL"/><cmd id="NOANIMAL"/>
-        <cmd id="PACKAGE"/><cmd id="NOPACKAGE"/>
         <cmd id="FACE"/><cmd id="NOFACE"/>
         <cmd id="LPR"/><cmd id="NOLPR"/>
         <cmd id="LINE"/><cmd id="NOLINE"/>
@@ -71,7 +67,6 @@
       <st id="GV2" editor="E_STATUS"/>
       <st id="GV3" editor="E_STATUS"/>
       <st id="GV4" editor="E_STATUS"/>
-      <st id="GV5" editor="E_STATUS"/>
       <st id="GV6" editor="E_STATUS"/>
       <st id="GV7" editor="E_STATUS"/>
       <st id="GV8" editor="E_STATUS"/>
@@ -92,7 +87,6 @@
         <cmd id="PERSON"/><cmd id="NOPERSON"/>
         <cmd id="VEHICLE"/><cmd id="NOVEHICLE"/>
         <cmd id="ANIMAL"/><cmd id="NOANIMAL"/>
-        <cmd id="PACKAGE"/><cmd id="NOPACKAGE"/>
         <cmd id="FACE"/><cmd id="NOFACE"/>
         <cmd id="LPR"/><cmd id="NOLPR"/>
         <cmd id="LINE"/><cmd id="NOLINE"/>
@@ -117,7 +111,6 @@
       <st id="GV2" editor="E_STATUS"/>
       <st id="GV3" editor="E_STATUS"/>
       <st id="GV4" editor="E_STATUS"/>
-      <st id="GV5" editor="E_STATUS"/>
       <st id="GV6" editor="E_STATUS"/>
       <st id="GV18" editor="E_STATUS"/>
     </sts>
@@ -128,7 +121,6 @@
         <cmd id="PERSON"/><cmd id="NOPERSON"/>
         <cmd id="VEHICLE"/><cmd id="NOVEHICLE"/>
         <cmd id="ANIMAL"/><cmd id="NOANIMAL"/>
-        <cmd id="PACKAGE"/><cmd id="NOPACKAGE"/>
         <cmd id="FACE"/><cmd id="NOFACE"/>
         <cmd id="RING"/><cmd id="NORING"/>
       </sends>

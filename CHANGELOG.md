@@ -2,6 +2,10 @@
 
 All notable changes to this project are documented here.
 
+## 1.5.6
+
+- Remove package status (GV5) and PACKAGE/NOPACKAGE commands from all camera nodedefs; ignore package smart-detect events — the public Integration API rarely delivers them as usable status
+
 ## 1.5.5
 
 - Temporary Polyglot **success** notice after connect and discovery (clears after 30 s), matching TaHoma — includes camera and sensor counts; **hello** notice while retrying connection; **Discover** / resync shows updated success notice

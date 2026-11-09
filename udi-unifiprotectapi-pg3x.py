@@ -16,7 +16,7 @@ import udi_interface
 
 from nodes import Controller
 
-VERSION = "1.5.5"
+VERSION = "1.5.6"
 
 if __name__ == "__main__":
     polyglot = None
