@@ -75,6 +75,17 @@ def test_g4_doorbell_lite_by_type_only():
     assert camera_nodedef_for(cam) == NODEDEF_DOORBELL
 
 
+def test_doorbell_supports_ring_not_in_smart_detect_types():
+    """Ring is an event type, not listed in featureFlags.smartDetectTypes."""
+    cam = {
+        'type': 'UVC G6 Pro Entry',
+        'hasPackageCamera': True,
+        'featureFlags': {'smartDetectTypes': ['person', 'face']},
+    }
+    assert camera_supports_smart_type(cam, 'ring')
+    assert camera_supports_smart_type(cam, 'person')
+
+
 def test_supports_line_crossing():
     cam = {'featureFlags': {'hasLineCrossing': True}}
     assert camera_supports_smart_type(cam, 'line')

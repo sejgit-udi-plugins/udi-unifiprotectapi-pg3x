@@ -486,6 +486,8 @@ class Controller(udi_interface.Node):
             if evt_lower == 'motion':
                 cam_node.set_motion(is_open)
             elif evt_lower == 'ring':
+                LOGGER.info(
+                    f'Ring event on {cam_node.name}: open={is_open}')
                 cam_node.set_detection_type('ring', is_open)
             elif evt_lower == 'smartdetectline':
                 LOGGER.info(

@@ -111,6 +111,8 @@ def camera_supports_smart_type(camera: dict, normalized_type: str) -> bool:
     norm = normalize_detect_type(normalized_type)
     if norm == 'motion':
         return True
+    if norm == 'ring':
+        return camera_is_doorbell(camera)
     if norm == 'line' or norm == 'linecross':
         return camera_supports_line_events(camera)
     if norm in _AUDIO_SMART:
