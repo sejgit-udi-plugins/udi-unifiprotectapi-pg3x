@@ -11,7 +11,7 @@ NODEDEF_AI = 'unifi_camera_ai'
 NODEDEF_AI_AUDIO = 'unifi_camera_ai_audio'
 NODEDEF_DOORBELL = 'unifi_camera_doorbell'
 
-_BASIC_SMART = frozenset({'person', 'vehicle', 'animal', 'package'})
+_BASIC_SMART = frozenset({'person', 'vehicle', 'animal'})
 _AI_SMART = frozenset({'face', 'licenseplate', 'license_plate'})
 _AUDIO_SMART = frozenset({
     'smoke', 'cmonx', 'co', 'siren', 'speak', 'babycry',

@@ -2,6 +2,13 @@
 
 All notable changes to this project are documented here.
 
+## 1.5.6
+
+- **Doorbell camera nodedef** (``unifi_camera_doorbell``): classify G4 doorbells and G6 Entry when the public API omits ``isDoorbell`` (``hasPackageCamera``, hardware ``type``, G6 + entry naming)
+- **Doorbell ring** (GV18): honor ring events when ``ring`` is not listed in ``smartDetectTypes``; pulse RING when the API sends only end-timestamp ring events; hold ring status **3 seconds** before NORING so Status and programs are visible
+- Remove package status (GV5) and PACKAGE/NOPACKAGE commands from all camera nodedefs; ignore package smart-detect events — the public Integration API rarely delivers them as usable status
+- After updating: reinstall profile **1.5.6**, run **DISCOVER**, and recreate doorbell/camera nodes if Package still appears on Status
+
 ## 1.5.5
 
 - Temporary Polyglot **success** notice after connect and discovery (clears after 30 s), matching TaHoma — includes camera and sensor counts; **hello** notice while retrying connection; **Discover** / resync shows updated success notice
