@@ -26,6 +26,7 @@ _WATCHDOG_DEFAULT_MIN = 5
 _RESTART_COOLDOWN_SEC = 1800
 _NOTICE_AFTER_SEC = 60
 _SUCCESS_NOTICE_SEC = 30
+_RING_HOLD_SEC = 3
 
 
 class Controller(udi_interface.Node):
@@ -43,6 +44,7 @@ class Controller(udi_interface.Node):
         self._cameras = {}
         self._sensors = {}
         self.detection_timeout = 300
+        self.ring_hold_sec = _RING_HOLD_SEC
         self.temperature_units = 'F'
         self._initialized = False
         self._controller_added = False
@@ -497,7 +499,6 @@ class Controller(udi_interface.Node):
                     # Public API often delivers ring only as an ended event
                     # (``end`` set) with no prior open on the websocket.
                     cam_node.set_detection_type('ring', True)
-                    cam_node.set_detection_type('ring', False)
             elif evt_lower == 'smartdetectline':
                 LOGGER.info(
                     f'Line crossing event on {cam_node.name}: open={is_open}')

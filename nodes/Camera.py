@@ -53,9 +53,15 @@ class Camera(udi_interface.Node):
         cmd_pair = self._cmd_pair_for_driver(driver)
         with self._timer_lock:
             self._timers.pop(driver, None)
+        if driver == 'GV18' and self._ctrl:
+            cleared_after = self._ctrl.ring_hold_sec
+        elif self._ctrl:
+            cleared_after = self._ctrl.detection_timeout
+        else:
+            cleared_after = 0
         LOGGER.warning(
             f'{self.name}: {driver} auto-cleared after '
-            f'{self._ctrl.detection_timeout}s (no close event received)')
+            f'{cleared_after}s (no close event received)')
         set_binary_detection(
             self,
             driver,
@@ -91,7 +97,15 @@ class Camera(udi_interface.Node):
         driver, cmd_pair = mapping
         if driver not in self._allowed:
             return
-        timeout = self._ctrl.detection_timeout if self._ctrl else 0
+        detect_norm = str(detect_type).strip().lower()
+        if detect_norm == 'ring':
+            if active:
+                timeout = (
+                    self._ctrl.ring_hold_sec if self._ctrl else 3)
+            else:
+                timeout = 0
+        else:
+            timeout = self._ctrl.detection_timeout if self._ctrl else 0
         set_binary_detection(
             self,
             driver,
