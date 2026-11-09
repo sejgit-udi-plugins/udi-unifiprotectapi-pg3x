@@ -487,8 +487,17 @@ class Controller(udi_interface.Node):
                 cam_node.set_motion(is_open)
             elif evt_lower == 'ring':
                 LOGGER.info(
-                    f'Ring event on {cam_node.name}: open={is_open}')
-                cam_node.set_detection_type('ring', is_open)
+                    f'Ring event on {cam_node.name}: change={change_type} '
+                    f'open={is_open}')
+                if change_type == 'remove':
+                    cam_node.set_detection_type('ring', False)
+                elif is_open:
+                    cam_node.set_detection_type('ring', True)
+                else:
+                    # Public API often delivers ring only as an ended event
+                    # (``end`` set) with no prior open on the websocket.
+                    cam_node.set_detection_type('ring', True)
+                    cam_node.set_detection_type('ring', False)
             elif evt_lower == 'smartdetectline':
                 LOGGER.info(
                     f'Line crossing event on {cam_node.name}: open={is_open}')
