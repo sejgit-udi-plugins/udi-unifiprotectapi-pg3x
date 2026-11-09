@@ -5,6 +5,7 @@ from utils.camera_caps import (
     NODEDEF_AI_AUDIO,
     NODEDEF_DETECT,
     NODEDEF_DOORBELL,
+    camera_is_doorbell,
     camera_nodedef_for,
     camera_supports_smart_type,
 )
@@ -45,6 +46,32 @@ def test_doorbell_camera():
             'smartDetectTypes': ['person'],
         },
     }
+    assert camera_nodedef_for(cam) == NODEDEF_DOORBELL
+
+
+def test_g6_pro_entry_public_api_payload():
+    """G6 Entry on public API: no isDoorbell, hasPackageCamera + G6 Entry type."""
+    cam = {
+        'name': 'Jenkins G6 Pro Entry',
+        'type': 'UVC G6 Pro Entry',
+        'hasPackageCamera': True,
+        'featureFlags': {
+            'smartDetectTypes': [
+                'person', 'vehicle', 'animal', 'package', 'face', 'licensePlate',
+            ],
+            'smartDetectAudioTypes': ['alrmSmoke', 'alrmSiren'],
+        },
+    }
+    assert camera_is_doorbell(cam)
+    assert camera_nodedef_for(cam) == NODEDEF_DOORBELL
+
+
+def test_g4_doorbell_lite_by_type_only():
+    cam = {
+        'type': 'UVC G4 Doorbell Lite',
+        'featureFlags': {'smartDetectTypes': ['person']},
+    }
+    assert camera_is_doorbell(cam)
     assert camera_nodedef_for(cam) == NODEDEF_DOORBELL
 
 

@@ -69,9 +69,28 @@ def camera_supports_line_events(camera: dict) -> bool:
     return True
 
 
+def _camera_hardware_type(camera: dict) -> str:
+    return str(camera.get('type') or '').lower()
+
+
 def camera_is_doorbell(camera: dict) -> bool:
+    """Doorbell / entry intercom cameras for the public Integration API.
+
+    The trimmed public ``featureFlags`` object often omits ``isDoorbell`` (seen
+    on G6 Entry). Fall back to top-level ``hasPackageCamera`` and the hardware
+    ``type`` string (e.g. ``UVC G4 Doorbell``, ``UVC G6 Pro Entry``).
+    """
     flags = _feature_flags(camera)
-    return bool(flags.get('isDoorbell'))
+    if flags.get('isDoorbell'):
+        return True
+    if camera.get('hasPackageCamera'):
+        return True
+    dtype = _camera_hardware_type(camera)
+    if 'doorbell' in dtype:
+        return True
+    if 'entry' in dtype and 'g6' in dtype:
+        return True
+    return False
 
 
 def camera_nodedef_for(camera: dict) -> str:
