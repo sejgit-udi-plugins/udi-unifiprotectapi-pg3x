@@ -2,6 +2,10 @@
 
 All notable changes to this project are documented here.
 
+## Unreleased
+
+- Controller **QUERY** uses ``/cameras`` and ``/sensors`` list calls instead of one GET per node, avoiding Protect **429** rate limits when ISY queries the whole subtree
+
 ## 1.5.6
 
 - **Doorbell camera nodedef** (``unifi_camera_doorbell``): classify G4 doorbells and G6 Entry when the public API omits ``isDoorbell`` (``hasPackageCamera``, hardware ``type``, G6 + entry naming)

@@ -556,12 +556,40 @@ class Controller(udi_interface.Node):
         if host:
             self._show_success_notice(host)
 
+    async def _query_refresh(self):
+        """Refresh known nodes from list endpoints (avoids per-device QUERY storms)."""
+        try:
+            cameras = await self._client.get_cameras()
+            sensors = await self._client.get_sensors()
+        except aiohttp.ClientResponseError as e:
+            LOGGER.warning(f'Query refresh failed: {e}')
+            return
+        except Exception as e:
+            LOGGER.warning(f'Query refresh failed: {e}')
+            return
+        for cam in cameras:
+            node = self._node_for_camera(cam.get('id', ''))
+            if not node:
+                continue
+            node.update_camera(cam)
+            node.set_connected(cam.get('state', '') == 'CONNECTED')
+            node.reportDrivers()
+        for sensor in sensors:
+            node = self._node_for_sensor(sensor.get('id', ''))
+            if not node:
+                continue
+            node.set_capabilities(sensor_capabilities(sensor))
+            node.apply_state(sensor, replace=True)
+
     def query(self, command=None):
         self.reportDrivers()
-        for node in self._cameras.values():
-            node.query()
-        for node in self._sensors.values():
-            node.query()
+        if self._initialized and self._client:
+            self._async.submit(self._query_refresh())
+        else:
+            for node in self._cameras.values():
+                node.reportDrivers()
+            for node in self._sensors.values():
+                node.reportDrivers()
 
     def cmd_discover(self, command=None):
         if not self._initialized:
